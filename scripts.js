@@ -66,7 +66,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game(){
+function game(rounds){
     let playerScore = 0;
     let computerScore = 0;
     let keepGoing = true;
@@ -87,11 +87,11 @@ function game(){
             alert("Current Score \r\nPlayer: " + playerScore + "\r\nComputer: " + computerScore);
         }
 
-        if(playerScore == 5){
+        if(playerScore == rounds){
             alert("Congratulations! You won the game. You deserve a Redhorse beer.");
             keepGoing = false;
         }
-        else if(computerScore == 5) {
+        else if(computerScore == rounds) {
             alert("Try Again. Your computer just got lucky.");
             keepGoing = false;
         }
