@@ -13,17 +13,17 @@ function setName(name) {
 }
 
 function showRules(){
-    let modal = document.querySelector(".modal");
+    let modal = document.querySelector(".rules-modal");
     modal.style.display = "block";
 
-    const btn = document.querySelector('.close');
+    const btn = document.querySelector('#rules-close');
     btn.addEventListener('click', () => {
-        closeModal();
+        closeModal(".rules-modal");
     });
 }
 
-function closeModal() {
-    let modal = document.querySelector(".modal");
+function closeModal(className) {
+    let modal = document.querySelector(className);
     modal.style.display = "none";
 }
 
@@ -36,6 +36,8 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
+    clearRoundMessage();
+
     let playerHand = document.getElementById("player-hand");
     let computerHand = document.getElementById("computer-hand");
 
@@ -146,13 +148,58 @@ function updateScore(playerScore, computerScore) {
     score.textContent = `${playerCurrentScore}:${computerCurrentScore}`;
 
     if(playerCurrentScore == 5) {
-        showRules();
+        showWinner('player');
     }
     else if(computerCurrentScore == 5) {
-        showRules();
+        showWinner('computer');
     }
 }
 
+function showWinner(winner){
+    let resultImg = document.getElementById('result-image');
+    let modal = document.querySelector(".result-modal");
+    const playAgainBtn = document.getElementById('play-again-button');
+    const exitBtn = document.getElementById('exit-button');
+
+    if(winner == 'player') {
+        resultImg.src = "images/congrats.gif";
+    }
+    else {
+        resultImg.src = "images/loser.jpg";
+    }
+
+    setTimeout(function() {
+        modal.style.display = "block";
+    }, 1000);
+    
+    playAgainBtn.addEventListener('click', () => {
+        closeModal(".result-modal");
+        reset();
+    });
+
+    exitBtn.addEventListener('click', () => {
+        window.close();
+    });
+}
+
+function reset() {
+    const score = document.querySelector('#score');
+    let playerHand = document.getElementById("player-hand");
+    let computerHand = document.getElementById("computer-hand");
+
+    playerHand.src = "images/rock-left.png";
+    computerHand.src = "images/rock-right.png";
+    score.textContent = "0:0";
+
+    clearRoundMessage();
+
+}
+
+function clearRoundMessage() {
+    const roundResult = document.querySelector("#round-result");
+
+    roundResult.textContent = "";
+}
 window.addEventListener('load', () => {
     setName(getName());
     showRules();
