@@ -1,3 +1,32 @@
+function getName(){
+    let userName = prompt("Enter your name: ", "player");
+    if (userName.length > 10) {
+        userName = userName.substr(0, 10);
+    }
+    
+    return userName;
+}
+
+function setName(name) {
+    let newName = name;
+    document.querySelector("#user-name").textContent = newName;
+}
+
+function showRules(){
+    let modal = document.querySelector(".modal");
+    modal.style.display = "block";
+
+    const btn = document.querySelector('.close');
+    btn.addEventListener('click', () => {
+        closeModal();
+    });
+}
+
+function closeModal() {
+    let modal = document.querySelector(".modal");
+    modal.style.display = "none";
+}
+
 function computerPlay() {
     let choices = ["rock", "paper", "scissors"];
     let randomNumber = Math.floor(Math.random() * 3);
@@ -6,94 +35,142 @@ function computerPlay() {
     return choice;
 }
 
-function playerPlay() {
-    let choice;
-    choice = prompt("Rock, paper, or scissors?");
-    choice = choice.toLowerCase();
-
-    return choice;
-}
-
 function playRound(playerSelection, computerSelection) {
+    let playerHand = document.getElementById("player-hand");
+    let computerHand = document.getElementById("computer-hand");
+
+    playerHand.src = "images/left-animated.gif";
+    computerHand.src = "images/right-animated.gif"
+
     if(playerSelection == "rock" && computerSelection == "scissors") {
-        alert("You won. Rock beats scissors.");
-        return "player";
+        setTimeout(function() {
+            playRoundResult("player");
+            playerHand.src = "images/rock-left.png";
+            computerHand.src = "images/scissors-right.png";
+        }, 2300);
+        
     }
 
     else if(playerSelection == "rock" && computerSelection == "paper") {
-        alert("You lost. Paper beats rock.");
-        return "computer";
+        setTimeout(function() {
+            playRoundResult("computer");
+            playerHand.src = "images/rock-left.png";
+            computerHand.src = "images/paper-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "rock" && computerSelection == "rock") {
-        alert("Tie. You both selected rock.");
-        return "tie";
+        setTimeout(function() {
+            playRoundResult("draw");
+            playerHand.src = "images/rock-left.png";
+            computerHand.src = "images/rock-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "paper" && computerSelection == "rock") {
-        alert("You won. Paper beats rock.");
-        return "player";
+        setTimeout(function() {
+            playRoundResult("player");
+            playerHand.src = "images/paper-left.png";
+            computerHand.src = "images/rock-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "paper" && computerSelection == "scissors") {
-        alert("You lost. Scissors beats paper.");
-        return "computer";
+        setTimeout(function() {
+            playRoundResult("computer");
+            playerHand.src = "images/paper-left.png";
+            computerHand.src = "images/scissors-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "paper" && computerSelection == "paper") {
-        alert("Tie. You both selected paper.");
-        return "tie";
+        setTimeout(function() {
+            playRoundResult("draw");
+            playerHand.src = "images/paper-left.png";
+            computerHand.src = "images/paper-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "scissors" && computerSelection == "paper") {
-        alert("You won. Scissors beats paper.");
-        return "player";
+        setTimeout(function() {
+            playRoundResult("player");
+            playerHand.src = "images/scissors-left.png";
+            computerHand.src = "images/paper-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "scissors" && computerSelection == "rock") {
-        alert("You lost. Rock beats scissors.");
-        return "computer";
+        setTimeout(function() {
+            playRoundResult("computer");
+            playerHand.src = "images/scissors-left.png";
+            computerHand.src = "images/rock-right.png";
+        }, 2300);
     }
 
     else if(playerSelection == "scissors" && computerSelection == "scissors") {
-        alert("Tie. You both selected scissors.");
-        return "tie";
+        setTimeout(function() {
+            playRoundResult("draw");
+            playerHand.src = "images/scissors-left.png";
+            computerHand.src = "images/scissors-right.png";
+        }, 2300);
     }
+}
 
+function playRoundResult(winner) {
+    const roundResult = document.querySelector("#round-result");
+
+    if (winner == "player") {
+        roundResult.style.color = "#04ff04";
+        roundResult.textContent = "You won!";
+        updateScore(1,0);
+    }
+    else if (winner == "computer") {
+        roundResult.style.color = "red";
+        roundResult.textContent = "You lost.";
+        updateScore(0,1);
+    }
     else {
-        alert("No contest. You should only select between rock, paper, or scissors.");
-        return "tie";
+        roundResult.style.color = "white";
+        roundResult.textContent = "Draw."
+        updateScore(0,0);
     }
 }
 
-function game(rounds){
-    let playerScore = 0;
-    let computerScore = 0;
-    let keepGoing = true;
+function updateScore(playerScore, computerScore) {
+    const score = document.querySelector('#score');
+    let playerCurrentScore =  parseInt(score.textContent.substr(0, 1),10);
+    let computerCurrentScore =  parseInt(score.textContent.substr(2), 10);
 
-    while(keepGoing) {
-        let winner;
-        winner = playRound(playerPlay(), computerPlay());
+    playerCurrentScore += playerScore;
+    computerCurrentScore += computerScore;
+    score.textContent = `${playerCurrentScore}:${computerCurrentScore}`;
 
-        if(winner == "player") {
-            playerScore++;
-            alert("Current Score \r\nPlayer: " + playerScore + "\r\nComputer: " + computerScore);
-        }
-        else if(winner == "computer") {
-            computerScore++;
-            alert("Current Score \r\nPlayer: " + playerScore + "\r\nComputer: " + computerScore);
-        }
-        else {
-            alert("Current Score \r\nPlayer: " + playerScore + "\r\nComputer: " + computerScore);
-        }
-
-        if(playerScore == rounds){
-            alert("Congratulations! You won the game. You deserve a Redhorse beer.");
-            keepGoing = false;
-        }
-        else if(computerScore == rounds) {
-            alert("Try Again. Your computer just got lucky.");
-            keepGoing = false;
-        }
+    if(playerCurrentScore == 5) {
+        showRules();
+    }
+    else if(computerCurrentScore == 5) {
+        showRules();
     }
 }
+
+window.addEventListener('load', () => {
+    setName(getName());
+    showRules();
+
+    const rock = document.querySelector("#rock-select");
+    const paper = document.querySelector("#paper-select");
+    const scissors = document.querySelector("#scissors-select");
+
+    rock.addEventListener('click', () => {
+        playRound('rock', computerPlay());
+    });
+
+    paper.addEventListener('click', () => {
+        playRound('paper', computerPlay());
+    });
+
+    scissors.addEventListener('click', () => {
+        playRound('scissors', computerPlay());
+    });
+});
+

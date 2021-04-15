@@ -13,11 +13,11 @@
         <h1>Jak em Poy</h1>
         <div class="sub-container">
             <div class="img">
-                <img src="images/rock-left.png" alt="close-fist left-handed">
+                <img src="images/rock-left.png" id="player-hand" alt="close-fist left-handed">
             </div>
             <p id="score">0:0</p>
             <div class="img">
-                <img src="images/rock-right.png" alt="close-fist right-handed">
+                <img src="images/rock-right.png" id="computer-hand" alt="close-fist right-handed">
             </div>    
         </div>
         <p id="round-result"></p>
@@ -31,21 +31,24 @@
             </div>
         </div>
         <div class="sub-container">
-            <p>Player name</p>
-            <p></p>
+            <p id="user-name">Player name</p>
             <p>Kompyuterist</p>
         </div>
         <div class="sub-container">
-            <div class="img-control">
+            <div class="img-control" id="rock-select">
                 <img src="images/rockSelect.png" alt="rock as choice">
             </div>
-            <div class="img-control">
+            <div class="img-control" id="paper-select">
                 <img src="images/paperSelect.png" alt="paper as choice">
             </div>
-            <div class="img-control">
+            <div class="img-control" id="scissors-select">
                 <img src="images/scissorsSelect.png" alt="scissors as choice">
             </div>
         </div>
+    </div>
+    <div class="modal">
+        <img id="rule-image" src="images/background.jpg" alt="rules">
+        <button class="close">I understand</button>
     </div>
 </body>
 </html>
