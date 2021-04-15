@@ -200,6 +200,17 @@ function clearRoundMessage() {
 
     roundResult.textContent = "";
 }
+
+function lockChoice(choice) {
+    choice.style.cssText = "border: 2px solid green; border-radius: 12px";
+    releaseChoice(choice);
+}
+
+function releaseChoice(choice) {
+    setTimeout(function() {
+        choice.style.cssText = "";
+    },2300);
+}
 window.addEventListener('load', () => {
     setName(getName());
     showRules();
@@ -210,14 +221,17 @@ window.addEventListener('load', () => {
 
     rock.addEventListener('click', () => {
         playRound('rock', computerPlay());
+        lockChoice(rock);
     });
 
     paper.addEventListener('click', () => {
         playRound('paper', computerPlay());
+        lockChoice(paper);
     });
 
     scissors.addEventListener('click', () => {
         playRound('scissors', computerPlay());
+        lockChoice(scissors);
     });
 });
 
