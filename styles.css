@@ -36,7 +36,7 @@ html, body {
     margin: 0;
 }
 
-img, .img, .img-control {
+img, .img, .img-control, .img-control-margin {
     width: 5rem;
     height: 5rem;
 }
@@ -61,7 +61,7 @@ img, .img, .img-control {
     font-size: 0.8rem;
 }
 
-.img-control {
+.img-control-margin {
     margin-right: 0.4rem;
 }
 

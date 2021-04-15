@@ -202,15 +202,27 @@ function clearRoundMessage() {
 }
 
 function lockChoice(choice) {
+    const imgControls = document.querySelectorAll('.img-control-margin');
+
     choice.style.cssText = "border: 2px solid green; border-radius: 12px";
+    imgControls.forEach((imgControl) => {
+        imgControl.classList.remove('img-control');
+    });
+
     releaseChoice(choice);
 }
 
 function releaseChoice(choice) {
+    const imgControls = document.querySelectorAll('.img-control-margin');
+
     setTimeout(function() {
         choice.style.cssText = "";
+        imgControls.forEach((imgControl) => {
+            imgControl.classList.add('img-control');
+        });
     },2300);
 }
+
 window.addEventListener('load', () => {
     setName(getName());
     showRules();
