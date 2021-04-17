@@ -202,24 +202,20 @@ function clearRoundMessage() {
 }
 
 function lockChoice(choice) {
-    const imgControls = document.querySelectorAll('.img-control-margin');
+    const imgControls = document.querySelector('.main-container > .sub-container:nth-child(6)');
 
     choice.style.cssText = "border: 2px solid green; border-radius: 12px";
-    imgControls.forEach((imgControl) => {
-        imgControl.classList.remove('img-control');
-    });
+    imgControls.style.pointerEvents = "none";
 
     releaseChoice(choice);
 }
 
 function releaseChoice(choice) {
-    const imgControls = document.querySelectorAll('.img-control-margin');
+    const imgControls = document.querySelector('.main-container > .sub-container:nth-child(6)');
 
     setTimeout(function() {
         choice.style.cssText = "";
-        imgControls.forEach((imgControl) => {
-            imgControl.classList.add('img-control');
-        });
+        imgControls.style.pointerEvents = "auto";
     },2300);
 }
 
@@ -231,7 +227,7 @@ window.addEventListener('load', () => {
     const paper = document.querySelector("#paper-select");
     const scissors = document.querySelector("#scissors-select");
 
-    rock.addEventListener('click', () => {
+    rock.addEventListener('click', (e) => {
         playRound('rock', computerPlay());
         lockChoice(rock);
     });
